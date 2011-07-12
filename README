@@ -1,0 +1,12 @@
+#############################################################################
+# This script replaces your facebook image urls with imgur
+# Usfull if you dont want to expose userID wich is hidden within the fb URL
+# USAGE: Just type the URL and it wil get replaced with imgur url
+# perl module Image:Imgur is required (`cpan Image::Imgurl`)
+## Settings:
+# /set fbimgur_apikey <key>
+#       - Need to be set, get one from http://imgur.com/register/api_anon
+# /set fbimgur_continue ON|OFF
+#       - if ON, the url wil get sent even on error (default: ON)
+##############################################################################
+
