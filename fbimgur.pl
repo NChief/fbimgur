@@ -30,7 +30,7 @@ settings_add_str('fbimgur', 'fbimgur_apikey', '');
 settings_add_bool('fbimgur', 'fbimgur_continue', 1); # Send the url even if error?
 
 sub check_fb {
-	my ($server, $text, $channel) = @_;
+	my ($text, $server, $witem) = @_;
 	if (($text =~ /(http.*(photos.*akamaihd\.net|photos.*fbcdn\.net).*\.jpg)/) && (settings_get_str('fbimgur_apikey'))) {
 		my $url = $1;
 		my $ourl = $url;
@@ -42,7 +42,7 @@ sub check_fb {
 
 		unless ($imgur_url =~ /^(\d+\.?\d*|\.\d+|\-1|\-3)$/) { # unless some error
 			$text =~ s/\Q$ourl\E/$imgur_url/;
-			Irssi::signal_continue($server, $text, $channel);
+			Irssi::signal_continue($text, $server, $witem);
 		} else {
 			print CRAP "\002fbimgur\002 returned error code: ".$imgur_url;
 			Irssi::signal_stop() unless settings_get_bool('fbimgur_continue');
@@ -55,4 +55,4 @@ unless (settings_get_str('fbimgur_apikey')) {
 	print CRAP "/set fbimgur_apikey <apikey>";
 }
 
-Irssi::signal_add('message own_public', 'check_fb');
+Irssi::signal_add('send text', 'check_fb');
